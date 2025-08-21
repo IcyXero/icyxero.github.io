@@ -29,6 +29,26 @@ html, body {
   transition: background 0.2s, color 0.2s;
 }
 
+#theme-toggle {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 1000;
+  padding: 0.5em 1.3em;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--card-border);
+  color: var(--accent);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+#theme-toggle:hover {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
 main {
   max-width: 500px;
   margin: 2rem auto;
@@ -69,41 +89,6 @@ h1 .accent {
   margin-bottom: 1.2rem;
 }
 
-.socials {
-  display: flex;
-  justify-content: center;
-  gap: 0.8rem;
-  margin-bottom: 1.2rem;
-}
-.socials a img {
-  width: 32px; height: 32px;
-  filter: brightness(1.1) contrast(1.1);
-  transition: filter 0.2s;
-  background: transparent;
-  border-radius: 8px;
-  padding: 2px;
-}
-.socials a:hover img {
-  filter: brightness(1.5) drop-shadow(0 0 6px var(--accent));
-}
-
-#theme-toggle {
-  display: block;
-  margin: 0.5rem auto 0 auto;
-  padding: 0.4em 1.2em;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 8px;
-  background: var(--card-border);
-  color: var(--accent);
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-#theme-toggle:hover {
-  background: var(--accent);
-  color: var(--foreground);
-}
-
 .stack ul {
   display: flex;
   flex-wrap: wrap;
@@ -136,7 +121,7 @@ section {
   margin-bottom: 2rem;
 }
 
-.projects h2, .contact h2 {
+.projects h2, .contact h2, .socials h2 {
   margin-bottom: 0.8rem;
 }
 
@@ -145,6 +130,35 @@ section {
   font-size: 1.1rem;
   color: var(--muted);
   margin-top: 1.5em;
+}
+
+.contact {
+  text-align: center;
+}
+.contact p {
+  text-align: center;
+  margin: 0.7em 0 0 0;
+}
+
+.socials {
+  text-align: center;
+}
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.social-icons a img {
+  width: 32px; height: 32px;
+  filter: brightness(1.1) contrast(1.1);
+  transition: filter 0.2s;
+  background: transparent;
+  border-radius: 8px;
+  padding: 2px;
+}
+.social-icons a:hover img {
+  filter: brightness(1.5) drop-shadow(0 0 6px var(--accent));
 }
 
 a {
@@ -159,4 +173,5 @@ a:hover {
 
 @media (max-width: 600px) {
   main { max-width: 98vw; padding: 1.2rem 0.4rem; }
+  #theme-toggle { top: 0.7rem; right: 0.7rem; }
 }
