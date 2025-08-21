@@ -79,6 +79,9 @@ h1 .accent {
   width: 32px; height: 32px;
   filter: brightness(1.1) contrast(1.1);
   transition: filter 0.2s;
+  background: transparent;
+  border-radius: 8px;
+  padding: 2px;
 }
 .socials a:hover img {
   filter: brightness(1.5) drop-shadow(0 0 6px var(--accent));
@@ -135,6 +138,13 @@ section {
 
 .projects h2, .contact h2 {
   margin-bottom: 0.8rem;
+}
+
+.coming-soon {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-top: 1.5em;
 }
 
 a {
