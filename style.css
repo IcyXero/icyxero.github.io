@@ -7,9 +7,6 @@
   --muted: #b3b9c5;
   --link: #58c4fa;
   --avatar-glow: 0 0 0 4px #58c4fa33, 0 0 32px 0 #58c4fa77;
-  --tooltip-bg: #23272f;
-  --tooltip-fg: #eaf6ff;
-  --tooltip-shadow: 0 4px 16px #12161b55;
 }
 
 [data-theme="light"] {
@@ -21,9 +18,6 @@
   --muted: #5a6270;
   --link: #1877f2;
   --avatar-glow: 0 0 0 4px #1877f233, 0 0 32px 0 #1877f2aa;
-  --tooltip-bg: #fff;
-  --tooltip-fg: #23272f;
-  --tooltip-shadow: 0 4px 16px #b5cdf655;
 }
 
 body[data-flat-theme="ocean"] {
@@ -35,9 +29,6 @@ body[data-flat-theme="ocean"] {
   --muted: #b3e7fa;
   --link: #00B4D8;
   --avatar-glow: 0 0 0 5px #00b4d855, 0 0 36px 0 #00b4d8cc, 0 0 60px 0 #48cae488;
-  --tooltip-bg: #02182b;
-  --tooltip-fg: #b3e7fa;
-  --tooltip-shadow: 0 4px 16px #00b4d855;
 }
 body[data-flat-theme="sunset"] {
   --background: #2d112b;
@@ -48,9 +39,6 @@ body[data-flat-theme="sunset"] {
   --muted: #ffd6d2;
   --link: #f67280;
   --avatar-glow: 0 0 0 5px #f6728055, 0 0 36px 0 #f67280bb, 0 0 60px 0 #fd594988;
-  --tooltip-bg: #3e1f47;
-  --tooltip-fg: #ffd6d2;
-  --tooltip-shadow: 0 4px 16px #f6728055;
 }
 body[data-flat-theme="forest"] {
   --background: #181d13;
@@ -61,9 +49,6 @@ body[data-flat-theme="forest"] {
   --muted: #d6ffd8;
   --link: #53d769;
   --avatar-glow: 0 0 0 5px #53d76955, 0 0 36px 0 #a7c957bb, 0 0 60px 0 #53d76988;
-  --tooltip-bg: #233418;
-  --tooltip-fg: #d6ffd8;
-  --tooltip-shadow: 0 4px 16px #53d76955;
 }
 body[data-flat-theme="mono"] {
   --background: #222;
@@ -74,9 +59,6 @@ body[data-flat-theme="mono"] {
   --muted: #bdbdbd;
   --link: #bbb;
   --avatar-glow: 0 0 0 5px #bbb6, 0 0 36px 0 #888b, 0 0 60px 0 #bbb6;
-  --tooltip-bg: #222;
-  --tooltip-fg: #f5f5f5;
-  --tooltip-shadow: 0 4px 16px #bbb4;
 }
 
 /* Remove scrollbars from window and body */
@@ -421,30 +403,6 @@ a:hover {
 }
 .theme-picker select:focus, .theme-picker select:hover {
   border-color: var(--accent);
-}
-
-/* Tooltip for theme toggle - improved styling */
-.theme-tooltip {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 100px;
-  max-width: 170px;
-  padding: 0.5em 1.2em;
-  background: var(--tooltip-bg);
-  color: var(--tooltip-fg);
-  border-radius: 10px;
-  font-size: 1.04rem;
-  font-family: 'Rajdhani', 'Inter', Arial, sans-serif;
-  box-shadow: var(--tooltip-shadow);
-  z-index: 2000;
-  pointer-events: none;
-  opacity: 0.98;
-  border: 1px solid var(--card-border);
-  text-align: center;
-  top: 70px;
-  transition: opacity 0.18s, background 0.18s, color 0.18s;
-  display: none;
 }
 
 /* Hide all scrollbars */
