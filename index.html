@@ -62,8 +62,18 @@
       </div>
     </section>
   </main>
+  <div id="theme-picker">
+    <label for="theme-select">🎨 Theme:</label>
+    <select id="theme-select" aria-label="Theme picker">
+      <option value="default">Default</option>
+      <option value="ocean">Ocean</option>
+      <option value="sunset">Sunset</option>
+      <option value="forest">Forest</option>
+      <option value="mono">Mono</option>
+    </select>
+  </div>
   <script>
-    // Simple dark/light mode toggle
+    // Dark/Light toggle (top right)
     const btn = document.getElementById('theme-toggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const userTheme = localStorage.getItem('theme');
@@ -77,13 +87,30 @@
       setTheme(current === 'dark' ? 'light' : 'dark');
     }
     btn.addEventListener('click', toggleTheme);
-
-    // On load, use user's preference or system preference
     if (userTheme) {
       setTheme(userTheme);
     } else {
       setTheme(prefersDark ? 'dark' : 'light');
     }
+
+    // Theme/color picker (bottom right)
+    const themePicker = document.getElementById('theme-picker');
+    const themeSelect = document.getElementById('theme-select');
+    const savedFlatTheme = localStorage.getItem('flatTheme');
+    if (savedFlatTheme && savedFlatTheme !== 'default') {
+      document.body.setAttribute('data-flat-theme', savedFlatTheme);
+      themeSelect.value = savedFlatTheme;
+    }
+    themeSelect.addEventListener('change', function() {
+      const t = themeSelect.value;
+      if (t === 'default') {
+        document.body.removeAttribute('data-flat-theme');
+        localStorage.removeItem('flatTheme');
+      } else {
+        document.body.setAttribute('data-flat-theme', t);
+        localStorage.setItem('flatTheme', t);
+      }
+    });
   </script>
 </body>
 </html>
