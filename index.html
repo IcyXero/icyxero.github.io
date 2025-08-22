@@ -82,7 +82,7 @@
       <option value="mono">Mono</option>
     </select>
   </div>
-  <div id="theme-tooltip" class="theme-tooltip" style="display:none;"></div>
+  <div id="theme-tooltip" class="theme-tooltip"></div>
   <script>
     // Theme toggling and picker
     const btn = document.getElementById('theme-toggle');
@@ -97,7 +97,6 @@
       btn.textContent = theme === 'dark' ? '🌙' : '☀️';
       btn.setAttribute('data-tooltip', theme === 'dark' ? 'Light Mode' : 'Dark Mode');
       localStorage.setItem('theme', theme);
-      // Ensure card layout matches theme
       updateThemeForCard();
     }
     function toggleTheme() {
@@ -106,14 +105,15 @@
     }
     btn.addEventListener('click', toggleTheme);
 
-    // Show tooltip on hover
+    // Show tooltip on hover, centered visually under button
     btn.addEventListener('mouseenter', function(e) {
       const mode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'Light Mode' : 'Dark Mode';
       themeTooltip.textContent = mode;
       themeTooltip.style.display = 'block';
+      // Center the tooltip under the button
       const rect = btn.getBoundingClientRect();
-      themeTooltip.style.left = `${rect.left + rect.width / 2 - 40}px`;
-      themeTooltip.style.top = `${rect.bottom + 6}px`;
+      themeTooltip.style.left = `calc(${rect.left + rect.width/2}px)`;
+      themeTooltip.style.top = `${rect.bottom + 8}px`;
     });
     btn.addEventListener('mouseleave', function() {
       themeTooltip.style.display = 'none';
@@ -171,7 +171,7 @@
       .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     updateThemeForCard();
 
-    // Matrix background effect
+    // Matrix background effect with theme-aware backgrounds
     (() => {
       const canvas = document.getElementById('matrix-bg');
       const ctx = canvas.getContext('2d');
@@ -181,24 +181,36 @@
       let columns = Math.floor(width / fontSize);
       let drops = new Array(columns).fill(1);
 
-      // Character sets per theme
+      // Matrix color and shadow per theme/darkmode/lightmode
       const matrixThemes = {
-        'default':   { color: '#58c4fa', shadow: '#1be7ff', chars: 'アイシゼロ0123456789' },
-        'dark':      { color: '#58c4fa', shadow: '#1be7ff', chars: 'アイシゼロ0123456789' },
-        'light':     { color: '#1877f2', shadow: '#114488', chars: 'IcyXero0123456789' },
-        'ocean':     { color: '#00b4d8', shadow: '#48cae4', chars: '水海潮0123456789' },
-        'sunset':    { color: '#f67280', shadow: '#f8b195', chars: '夕日サンセット0123456789' },
-        'forest':    { color: '#53d769', shadow: '#a7c957', chars: '森林フォレスト0123456789' },
-        'mono':      { color: '#bbb', shadow: '#888', chars: '01IcyXero' }
+        'default-dark':   { color: '#58c4fa', shadow: '#1be7ff', chars: 'アイシゼロ0123456789', bg: 'rgba(25,28,32,0.16)' },
+        'default-light':  { color: '#1877f2', shadow: '#114488', chars: 'IcyXero0123456789', bg: 'rgba(247,249,250,0.09)' },
+        'dark':           { color: '#58c4fa', shadow: '#1be7ff', chars: 'アイシゼロ0123456789', bg: 'rgba(25,28,32,0.16)' },
+        'light':          { color: '#1877f2', shadow: '#114488', chars: 'IcyXero0123456789', bg: 'rgba(247,249,250,0.09)' },
+        'ocean-dark':     { color: '#00b4d8', shadow: '#48cae4', chars: '水海潮0123456789', bg: 'rgba(4,28,50,0.18)' },
+        'ocean-light':    { color: '#004c6d', shadow: '#b3e7fa', chars: '水海潮0123456789', bg: 'rgba(233, 253, 255, 0.095)' },
+        'sunset-dark':    { color: '#f67280', shadow: '#f8b195', chars: '夕日サンセット0123456789', bg: 'rgba(45,17,43,0.17)' },
+        'sunset-light':   { color: '#d6249f', shadow: '#f67280', chars: '夕日サンセット0123456789', bg: 'rgba(255,240,243,0.11)' },
+        'forest-dark':    { color: '#53d769', shadow: '#a7c957', chars: '森林フォレスト0123456789', bg: 'rgba(24,29,19,0.16)' },
+        'forest-light':   { color: '#387c44', shadow: '#a7c957', chars: '森林フォレスト0123456789', bg: 'rgba(244,255,241,0.11)' },
+        'mono-dark':      { color: '#bbb', shadow: '#888', chars: '01IcyXero', bg: 'rgba(34,34,34,0.14)' },
+        'mono-light':     { color: '#333', shadow: '#bbb', chars: '01IcyXero', bg: 'rgba(245,245,245,0.09)' },
       };
 
-      function getMatrixTheme() {
+      function getMatrixThemeKey() {
         const body = document.body;
         const flat = body.getAttribute('data-flat-theme');
-        if (flat && matrixThemes[flat]) return matrixThemes[flat];
         const dt = document.documentElement.getAttribute('data-theme');
-        if (dt && matrixThemes[dt]) return matrixThemes[dt];
-        return matrixThemes['default'];
+        let key = '';
+        if (flat && flat !== 'default') {
+          key = flat + '-' + (dt === 'light' ? 'light' : 'dark');
+        } else {
+          key = (dt || 'default') + '-' + (dt === 'light' ? 'light' : 'dark');
+        }
+        if (!matrixThemes[key]) {
+          return dt === 'light' ? matrixThemes['default-light'] : matrixThemes['default-dark'];
+        }
+        return matrixThemes[key];
       }
 
       function resizeMatrix() {
@@ -212,11 +224,10 @@
       }
 
       function drawMatrix() {
-        // Fade the background slowly instead of clearing all at once
-        ctx.fillStyle = 'rgba(25,28,32,0.16)';
+        const theme = getMatrixThemeKey();
+        ctx.fillStyle = theme.bg;
         ctx.fillRect(0, 0, width, height);
 
-        const theme = getMatrixTheme();
         ctx.font = fontSize + "px 'Rajdhani', monospace";
         ctx.shadowColor = theme.shadow;
         ctx.shadowBlur = 9;
