@@ -223,6 +223,10 @@ body[data-flat-theme="mono"] {
   box-shadow: 0 1px 7px #0001;
   font-weight: 700;
 }
+.theme-picker select option {
+  background: var(--theme-picker-bg);
+  color: var(--theme-picker-fg);
+}
 .theme-picker select:focus, .theme-picker select:hover {
   border-color: var(--accent);
   background: var(--emoji-toggle-hover);
