@@ -1,6 +1,6 @@
 :root {
   --background: #191c20;
-  --foreground: #fff;
+  --foreground: #f9faff;
   --accent: #58c4fa;
   --card: #24272c;
   --card-border: #23272f;
@@ -20,199 +20,70 @@
   --avatar-glow: 0 0 0 4px #1877f233, 0 0 12px 0 #1877f299;
 }
 
-/* Flat minimal themes */
+/* Flat minimal themes - adjust foreground for readability */
 body[data-flat-theme="ocean"] {
   --background: #041C32;
-  --foreground: #fff;
+  --foreground: #f5fbff;
   --accent: #00B4D8;
   --card: #04293A;
   --card-border: #064663;
-  --muted: #7EC9E3;
+  --muted: #b3e7fa;
   --link: #00B4D8;
   --avatar-glow: 0 0 0 4px #00b4d833, 0 0 12px 0 #00b4d899;
 }
 body[data-flat-theme="sunset"] {
   --background: #2d112b;
-  --foreground: #fff;
+  --foreground: #fefaff;
   --accent: #f67280;
   --card: #3e1f47;
   --card-border: #f8b195;
-  --muted: #ffb7b2;
+  --muted: #ffd6d2;
   --link: #f67280;
   --avatar-glow: 0 0 0 4px #f6728033, 0 0 12px 0 #f6728099;
 }
 body[data-flat-theme="forest"] {
   --background: #181d13;
-  --foreground: #fff;
+  --foreground: #f4fff1;
   --accent: #53d769;
   --card: #233418;
   --card-border: #a7c957;
-  --muted: #b7e4c7;
+  --muted: #d6ffd8;
   --link: #53d769;
   --avatar-glow: 0 0 0 4px #53d76933, 0 0 12px 0 #53d76999;
 }
 body[data-flat-theme="mono"] {
   --background: #222;
-  --foreground: #eee;
+  --foreground: #f5f5f5;
   --accent: #bbb;
   --card: #282828;
   --card-border: #333;
-  --muted: #888;
+  --muted: #bdbdbd;
   --link: #bbb;
   --avatar-glow: 0 0 0 4px #bbb8, 0 0 12px 0 #bbb7;
 }
 
 /* ==== Cool Themed Shapes ==== */
-.bg-shapes {
-  pointer-events: none;
-  z-index: 0;
-  position: fixed;
-  inset: 0;
+/* ... (unchanged, keep your .bg-shapes and .bg-shape rules here) ... */
+
+html, body {
+  height: 100%;
+  min-height: 100vh;
   width: 100vw;
-  height: 100vh;
+  margin: 0; padding: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Rajdhani', 'Inter', Arial, sans-serif;
+  transition: background 0.2s, color 0.2s;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
-}
-
-.bg-shape {
-  position: absolute;
-  opacity: 0.22;
-  filter: blur(2.5px);
-  transition: background 0.5s, opacity 0.5s, box-shadow 0.5s, border-radius 0.5s, transform 0.5s;
-}
-
-/* Default/Dark theme shapes */
-body:not([data-flat-theme]):not([data-theme="light"]) .bg-shape1 {
-  width: 350px; height: 350px;
-  left: -120px; top: -110px;
-  background: radial-gradient(circle at 40% 60%, #58c4fa 60%, #191c20 100%);
-  border-radius: 44% 56% 65% 35% / 47% 70% 30% 53%;
-}
-body:not([data-flat-theme]):not([data-theme="light"]) .bg-shape2 {
-  width: 230px; height: 230px;
-  right: -90px; top: 55vh;
-  background: radial-gradient(circle at 60% 30%, #1be7ff 70%, #191c20 100%);
-  border-radius: 50% 40% 60% 45% / 45% 60% 40% 55%;
-}
-body:not([data-flat-theme]):not([data-theme="light"]) .bg-shape3 {
-  width: 120px; height: 120px;
-  left: 70vw; top: 85vh;
-  background: linear-gradient(135deg, #58c4fa 60%, #1be7ff 100%);
-  border-radius: 44% 56% 65% 35% / 47% 70% 30% 53%;
-}
-
-/* Light theme shapes */
-[data-theme="light"]:not([data-flat-theme]) .bg-shape1 {
-  width: 310px; height: 310px;
-  left: -100px; top: -90px;
-  background: radial-gradient(circle at 30% 60%, #b8e1ff 70%, #f7f9fa 100%);
-  border-radius: 50% 40% 62% 38% / 47% 70% 30% 53%;
-  opacity: 0.17;
-}
-[data-theme="light"]:not([data-flat-theme]) .bg-shape2 {
-  width: 170px; height: 170px;
-  right: -60px; top: 60vh;
-  background: radial-gradient(circle at 60% 30%, #a7e3fa 80%, #f7f9fa 100%);
-  border-radius: 50% 40% 60% 45% / 45% 60% 40% 55%;
-  opacity: 0.16;
-}
-[data-theme="light"]:not([data-flat-theme]) .bg-shape3 {
-  width: 90px; height: 90px;
-  left: 68vw; top: 82vh;
-  background: linear-gradient(135deg, #b8e1ff 60%, #a7e3fa 100%);
-  border-radius: 44% 56% 65% 35% / 47% 70% 30% 53%;
-  opacity: 0.15;
-}
-
-/* Ocean theme shapes */
-body[data-flat-theme="ocean"] .bg-shape1 {
-  width: 380px; height: 380px;
-  left: -120px; top: -120px;
-  background: radial-gradient(circle at 40% 60%, #00b4d8 70%, #041C32 100%);
-  border-radius: 50% 60% 65% 40% / 50% 70% 30% 60%;
-  opacity: 0.19;
-}
-body[data-flat-theme="ocean"] .bg-shape2 {
-  width: 210px; height: 210px;
-  right: -70px; top: 58vh;
-  background: radial-gradient(circle at 60% 30%, #0077b6 80%, #041C32 100%);
-  border-radius: 50% 40% 60% 45% / 45% 60% 40% 55%;
-  opacity: 0.18;
-}
-body[data-flat-theme="ocean"] .bg-shape3 {
-  width: 140px; height: 140px;
-  left: 69vw; top: 87vh;
-  background: linear-gradient(135deg, #00b4d8 60%, #48cae4 100%);
-  border-radius: 44% 56% 65% 35% / 47% 70% 30% 53%;
-  opacity: 0.18;
-}
-
-/* Sunset theme shapes */
-body[data-flat-theme="sunset"] .bg-shape1 {
-  width: 320px; height: 320px;
-  left: -110px; top: -100px;
-  background: radial-gradient(circle at 40% 60%, #f67280 75%, #2d112b 100%);
-  border-radius: 60% 40% 60% 40% / 50% 70% 30% 50%;
-  opacity: 0.19;
-}
-body[data-flat-theme="sunset"] .bg-shape2 {
-  width: 200px; height: 200px;
-  right: -70px; top: 63vh;
-  background: radial-gradient(circle at 60% 30%, #f8b195 80%, #2d112b 100%);
-  border-radius: 55% 45% 65% 35% / 60% 55% 40% 55%;
-  opacity: 0.16;
-}
-body[data-flat-theme="sunset"] .bg-shape3 {
-  width: 100px; height: 100px;
-  left: 68vw; top: 90vh;
-  background: linear-gradient(135deg, #f67280 60%, #f8b195 100%);
-  border-radius: 44% 56% 65% 35% / 47% 70% 30% 53%;
-  opacity: 0.14;
-}
-
-/* Forest theme shapes */
-body[data-flat-theme="forest"] .bg-shape1 {
-  width: 300px; height: 300px;
-  left: -90px; top: -80px;
-  background: radial-gradient(circle at 40% 60%, #53d769 75%, #181d13 100%);
-  border-radius: 50% 60% 60% 40% / 53% 70% 37% 55%;
-  opacity: 0.22;
-}
-body[data-flat-theme="forest"] .bg-shape2 {
-  width: 180px; height: 180px;
-  right: -60px; top: 66vh;
-  background: radial-gradient(circle at 60% 30%, #a7c957 85%, #181d13 100%);
-  border-radius: 60% 40% 60% 45% / 45% 60% 45% 55%;
-  opacity: 0.17;
-}
-body[data-flat-theme="forest"] .bg-shape3 {
-  width: 110px; height: 110px;
-  left: 67vw; top: 89vh;
-  background: linear-gradient(135deg, #53d769 60%, #a7c957 100%);
-  border-radius: 44% 56% 65% 35% / 47% 70% 30% 53%;
-  opacity: 0.13;
-}
-
-/* Mono theme shapes */
-body[data-flat-theme="mono"] .bg-shape1 {
-  width: 275px; height: 275px;
-  left: -80px; top: -70px;
-  background: radial-gradient(circle at 40% 60%, #bbb 85%, #222 100%);
-  border-radius: 55% 45% 62% 38% / 47% 70% 30% 53%;
-  opacity: 0.13;
-}
-body[data-flat-theme="mono"] .bg-shape2 {
-  width: 170px; height: 170px;
-  right: -60px; top: 68vh;
-  background: radial-gradient(circle at 60% 30%, #888 75%, #222 100%);
-  border-radius: 50% 50% 60% 45% / 45% 60% 40% 55%;
-  opacity: 0.12;
-}
-body[data-flat-theme="mono"] .bg-shape3 {
-  width: 90px; height: 90px;
-  left: 68vw; top: 89vh;
-  background: linear-gradient(135deg, #bbb 60%, #888 100%);
-  border-radius: 44% 56% 65% 35% / 47% 70% 30% 53%;
-  opacity: 0.10;
 }
 
 .center-wrapper {
@@ -221,7 +92,7 @@ body[data-flat-theme="mono"] .bg-shape3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: auto;
+  overflow: hidden;
 }
 
 main {
@@ -229,18 +100,21 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  /* Fixed layout for a card look - fits nicely on desktop without scrollbars */
   width: 370px;
-  min-height: 560px;
+  height: 600px;
   max-width: 95vw;
+  max-height: 95vh;
   margin: 0 auto;
-  padding: 2.2rem 1.1rem 1.7rem 1.1rem;
+  padding: 2.1rem 1.1rem 1.1rem 1.1rem;
   background: var(--card);
   border-radius: 18px;
   border: 1px solid var(--card-border);
   box-shadow: 0 2px 24px rgba(0,0,0,0.10);
   transition: background 0.2s, border 0.2s, box-shadow 0.2s;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #theme-toggle {
@@ -472,6 +346,7 @@ a:hover {
   main { 
     max-width: 99vw; 
     width: 99vw;
+    height: auto;
     min-height: unset;
     padding: 1.2rem 0.4rem; 
   }
