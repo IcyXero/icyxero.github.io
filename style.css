@@ -61,27 +61,6 @@ body[data-flat-theme="mono"] {
   --avatar-glow: 0 0 0 5px #bbb6, 0 0 36px 0 #888b, 0 0 60px 0 #bbb6;
 }
 
-html, body {
-  height: 100%;
-  min-height: 100vh;
-  width: 100vw;
-  margin: 0; padding: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Rajdhani', 'Inter', Arial, sans-serif;
-  transition: background 0.2s, color 0.2s;
-  box-sizing: border-box;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100vh;
-  min-width: 100vw;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
 /* Matrix Canvas */
 #matrix-bg {
   position: fixed;
@@ -107,7 +86,7 @@ body {
   position: relative;
 }
 
-/* Minimal main card */
+/* Minimal main card + theme variants */
 main {
   display: flex;
   flex-direction: column;
@@ -122,7 +101,7 @@ main {
   border-radius: 17px;
   border: 1.3px solid var(--card-border);
   box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-  transition: background 0.2s, border 0.2s;
+  transition: background 0.2s, border 0.2s, box-shadow 0.2s;
   box-sizing: border-box;
   padding: 24px 18px 18px 18px;
   overflow-y: auto;
@@ -130,6 +109,40 @@ main {
   z-index: 2;
 }
 
+/* Card layout overrides per theme */
+main.theme-default {}
+main.theme-ocean {
+  background: linear-gradient(135deg, #02182b 70%, #00b4d8 120%);
+  border-radius: 18px 38px 18px 28px;
+  border: 1.5px solid #48cae4;
+  box-shadow: 0 2px 32px #00b4d822;
+}
+main.theme-sunset {
+  background: linear-gradient(135deg, #2d112b 60%, #f67280 120%);
+  border-radius: 38px 18px 28px 18px;
+  border: 1.5px solid #f8b195;
+  box-shadow: 0 2px 32px #f6728022;
+}
+main.theme-forest {
+  background: linear-gradient(135deg, #1a2310 70%, #53d769 120%);
+  border-radius: 28px 18px 38px 18px;
+  border: 1.5px solid #a7c957;
+  box-shadow: 0 2px 32px #53d76922;
+}
+main.theme-mono {
+  background: linear-gradient(135deg, #222 60%, #bbb 120%);
+  border-radius: 18px;
+  border: 1.5px solid #888;
+  box-shadow: 0 2px 32px #bbb4;
+}
+
+/* Logo link */
+.site-logo-link {
+  display: block;
+  margin: 0 auto 0;
+  width: 52px;
+  height: 52px;
+}
 .site-logo {
   width: 52px;
   height: 52px;
@@ -255,11 +268,11 @@ section {
   transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
   margin: 0 1.5px;
 }
-.social-icons a.email { background: linear-gradient(135deg, #fff 60%, #f7f9fa 100%); }
 .social-icons a.twitter { background: linear-gradient(135deg, #1da1f2 60%, #1877f2 100%); }
 .social-icons a.instagram {
   background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
 }
+.social-icons a.email { background: linear-gradient(135deg, #fff 60%, #f7f9fa 100%); }
 .social-icons a:hover,
 .social-icons a:focus {
   box-shadow: 0 0 0 2px var(--accent), 0 6px 18px 0 var(--accent);
@@ -350,6 +363,26 @@ a:hover {
 }
 .theme-picker select:focus, .theme-picker select:hover {
   border-color: var(--accent);
+}
+
+/* Tooltip for theme toggle */
+.theme-tooltip {
+  position: fixed;
+  padding: 0.38em 1em;
+  background: var(--card);
+  color: var(--accent);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Rajdhani', 'Inter', Arial, sans-serif;
+  box-shadow: 0 2px 12px #0002;
+  z-index: 2000;
+  pointer-events: none;
+  opacity: 0.98;
+  border: 1px solid var(--card-border);
+  min-width: 80px;
+  text-align: center;
+  left: 0;
+  top: 0;
 }
 
 @media (max-width: 600px) {
