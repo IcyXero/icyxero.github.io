@@ -95,6 +95,9 @@
           <a href="https://instagram.com/icyxero" target="_blank" rel="noopener" aria-label="Instagram" class="icon instagram" title="Instagram">
             <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/instagram.svg" alt="Instagram">
           </a>
+          <a href="https://discord.com/users/icyxero" target="_blank" rel="noopener" aria-label="Discord" class="icon discord" title="Discord">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/discord.svg" alt="Discord" style="background: none;">
+          </a>
           <a href="mailto:icyxerodev@gmail.com" target="_blank" rel="noopener" aria-label="Email" class="icon email" title="Email">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Email">
           </a>
@@ -103,20 +106,12 @@
     </main>
   </div>
 
-  <!-- Custom Modern Dark/Light Toggle Switch -->
-  <label class="theme-toggle-switch" id="theme-toggle-switch" tabindex="0" aria-label="Toggle dark/light mode">
-    <span class="toggle-label"></span>
-    <input type="checkbox" id="theme-toggle-checkbox" />
-    <span class="toggle-slider">
-      <span class="toggle-thumb"></span>
-      <span class="toggle-moon">🌙</span>
-      <span class="toggle-sun">☀️</span>
-    </span>
-  </label>
-
-  <!-- Modern Theme Picker -->
-  <div id="theme-picker" class="theme-picker">
-    <label for="theme-select">🎨 Theme:</label>
+  <!-- Just emoji toggle for dark/light mode -->
+  <button id="theme-toggle-emoji" class="emoji-toggle" aria-label="Toggle dark/light mode">🌙</button>
+  <!-- Just emoji for theme switcher -->
+  <button id="theme-picker-emoji" class="emoji-toggle" aria-label="Theme picker" title="Change theme">🎨</button>
+  <!-- Modern Theme Picker UI (hidden until emoji clicked) -->
+  <div id="theme-picker" class="theme-picker" style="display:none;">
     <select id="theme-select" aria-label="Theme picker">
       <option value="default">Default</option>
       <option value="ocean">Ocean</option>
@@ -150,47 +145,48 @@
       tick();
     })();
 
-    // Modern theme toggle switch logic
-    const toggleSwitch = document.getElementById('theme-toggle-switch');
-    const toggleCheckbox = document.getElementById('theme-toggle-checkbox');
+    // Dark/light emoji toggle logic
+    const emojiToggle = document.getElementById('theme-toggle-emoji');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const userTheme = localStorage.getItem('theme');
     let currentTheme = userTheme || (prefersDark ? 'dark' : 'light');
-
     function setTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       currentTheme = theme;
-      toggleCheckbox.checked = theme === 'light';
-      updateToggleLabel();
+      emojiToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
       updateThemeForCard();
     }
     function toggleTheme() {
-      setTheme(toggleCheckbox.checked ? 'light' : 'dark');
+      setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     }
-    toggleCheckbox.addEventListener('change', toggleTheme);
-    toggleSwitch.addEventListener('keydown', function(e) {
-      if (e.key === ' ' || e.key === 'Enter') {
-        toggleCheckbox.checked = !toggleCheckbox.checked;
-        toggleTheme();
-        e.preventDefault();
-      }
-    });
-
-    // Set initial theme (and toggle UI)
-    function updateToggleLabel() {
-      const label = toggleSwitch.querySelector('.toggle-label');
-      label.textContent = toggleCheckbox.checked ? "Light" : "Dark";
-    }
+    emojiToggle.addEventListener('click', toggleTheme);
+    // Initial
     if (userTheme) {
       setTheme(userTheme);
     } else {
       setTheme(prefersDark ? 'dark' : 'light');
     }
 
-    // Theme/color picker (bottom right)
+    // Theme picker emoji logic
+    const themePickerEmoji = document.getElementById('theme-picker-emoji');
     const themePicker = document.getElementById('theme-picker');
     const themeSelect = document.getElementById('theme-select');
+    themePickerEmoji.addEventListener('click', function() {
+      if (themePicker.style.display === "none" || themePicker.style.display === "") {
+        themePicker.style.display = "flex";
+      } else {
+        themePicker.style.display = "none";
+      }
+    });
+    // Hide picker on outside click
+    document.addEventListener('click', function(e) {
+      if (!themePicker.contains(e.target) && e.target !== themePickerEmoji) {
+        themePicker.style.display = "none";
+      }
+    });
+
+    // Set theme from picker
     const savedFlatTheme = localStorage.getItem('flatTheme');
     function setFlatTheme(t) {
       if (t === 'default') {
@@ -208,6 +204,7 @@
     }
     themeSelect.addEventListener('change', function() {
       setFlatTheme(themeSelect.value);
+      themePicker.style.display = "none";
     });
 
     // Card layout changes by theme
@@ -226,7 +223,6 @@
         main.classList.add('theme-default');
       }
     }
-    // On theme change, update card
     new MutationObserver(updateThemeForCard)
       .observe(document.body, { attributes: true, attributeFilter: ['data-flat-theme'] });
     new MutationObserver(updateThemeForCard)
