@@ -24,6 +24,24 @@
   <link rel="stylesheet" href="style.css?v=20250822">
 </head>
 <body>
+  <!-- Theme-aware Loader -->
+  <div id="custom-loader" class="custom-loader">
+    <div class="loader-logo-wrap">
+      <img src="logo.png" alt="IcyXero Logo" class="loader-logo" />
+    </div>
+    <div class="loader-matrix">
+      <span class="loader-char">I</span>
+      <span class="loader-char">C</span>
+      <span class="loader-char">Y</span>
+      <span class="loader-char">X</span>
+      <span class="loader-char">E</span>
+      <span class="loader-char">R</span>
+      <span class="loader-char">O</span>
+    </div>
+    <div class="loader-bar-outer">
+      <div class="loader-bar-inner"></div>
+    </div>
+  </div>
   <!-- Matrix Canvas Background -->
   <canvas id="matrix-bg"></canvas>
   <div class="center-wrapper">
@@ -94,6 +112,30 @@
     </select>
   </div>
   <script>
+    // Loader: Fade out after window load
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const loader = document.getElementById('custom-loader');
+        loader.classList.add('fade-out');
+        setTimeout(() => loader.style.display = 'none', 700);
+      }, 300); // Adjust delay for effect
+    });
+
+    // Loader progress bar animation
+    (function animateLoaderBar() {
+      const bar = document.querySelector('.loader-bar-inner');
+      if (!bar) return;
+      let progress = 0, dir = 1;
+      function tick() {
+        progress += dir * 2.5;
+        if (progress >= 100) { dir = -1; progress = 100; }
+        if (progress <= 0) { dir = 1; progress = 0; }
+        bar.style.width = progress + '%';
+        requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+
     // Theme toggling and picker
     const btn = document.getElementById('theme-toggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
