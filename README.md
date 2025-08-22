@@ -31,5 +31,3 @@ Web developer from Brooklyn, NY skilled in HTML, CSS, JavaScript, PHP, Python, a
 
 [![Twitter](https://img.shields.io/badge/Twitter-@IcyXero-1DA1F2?logo=twitter&logoColor=white)](https://twitter.com/IcyXero)
 [![Instagram](https://img.shields.io/badge/Instagram-@icyxero-E4405F?logo=instagram&logoColor=white)](https://instagram.com/icyxero)
-
----
