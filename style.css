@@ -75,17 +75,27 @@ html, body {
 }
 
 body {
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
+  min-width: 100vw;
+  margin: 0;
+  padding: 0;
 }
+
+/* Centering wrapper for the whole portfolio */
+.center-wrapper {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 main {
-  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 60vh;
   max-width: 500px;
   margin: 0 auto;
   padding: 2rem 1rem;
@@ -116,35 +126,44 @@ main {
   color: var(--foreground);
 }
 
-#theme-picker {
+.theme-picker {
   position: fixed;
   bottom: 1.2rem;
   right: 1.2rem;
   background: var(--card);
   border: 1px solid var(--card-border);
-  border-radius: 10px;
-  padding: 0.5em 1em;
-  z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-radius: 12px;
+  padding: 0.7em 1.1em 0.7em 1.1em;
+  z-index: 999;
+  box-shadow: 0 3px 16px 0 #0002;
   font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  min-width: 110px;
 }
-#theme-picker label {
-  margin-right: 0.5em;
+.theme-picker label {
   color: var(--accent);
   font-weight: 600;
+  margin-right: 0.5em;
+  font-size: 1.1em;
+  letter-spacing: 0.5px;
 }
-
-#theme-select {
+.theme-picker select {
   background: var(--background);
   color: var(--foreground);
-  border: 1px solid var(--card-border);
+  border: 1.5px solid var(--card-border);
   border-radius: 6px;
-  padding: 0.3em 0.7em;
-  font-size: 1rem;
+  padding: 0.3em 0.9em 0.3em 0.6em;
+  font-size: 1em;
   transition: background 0.2s, color 0.2s, border 0.2s;
-}
-#theme-select:focus {
+  cursor: pointer;
+  font-family: inherit;
+  appearance: none;
   outline: none;
+  box-shadow: 0 1px 5px #0001;
+}
+.theme-picker select:focus, .theme-picker select:hover {
   border-color: var(--accent);
 }
 
@@ -277,11 +296,12 @@ a:hover {
 }
 
 @media (max-width: 600px) {
+  .center-wrapper { min-height: unset; }
   main { 
     max-width: 98vw; 
     padding: 1.2rem 0.4rem; 
     min-height: unset;
   }
   #theme-toggle { top: 0.7rem; right: 0.7rem; }
-  #theme-picker { bottom: 0.7rem; right: 0.7rem; }
+  .theme-picker { bottom: 0.7rem; right: 0.7rem; }
 }
