@@ -61,7 +61,6 @@ body[data-flat-theme="mono"] {
   --avatar-glow: 0 0 0 5px #bbb6, 0 0 36px 0 #888b, 0 0 60px 0 #bbb6;
 }
 
-/* Minimal Card and Background */
 html, body {
   height: 100%;
   min-height: 100vh;
@@ -83,66 +82,18 @@ body {
   overflow: hidden;
 }
 
-.bg-shapes {
-  pointer-events: none;
-  z-index: 0;
+/* Matrix Canvas */
+#matrix-bg {
   position: fixed;
   inset: 0;
+  z-index: 0;
   width: 100vw;
   height: 100vh;
-  overflow: visible;
+  display: block;
+  background: transparent;
+  pointer-events: none;
+  user-select: none;
 }
-.bg-shape {
-  position: absolute;
-  opacity: 0.22;
-  filter: blur(2.5px);
-  transition: background 0.5s, opacity 0.5s, box-shadow 0.5s, border-radius 0.5s, transform 0.5s;
-}
-/* Shapes: (as before) ... */
-
-/* Default/Dark theme shapes */
-body:not([data-flat-theme]):not([data-theme="light"]) .bg-shape1 {
-  width: 350px; height: 350px;
-  left: -120px; top: -110px;
-  background: radial-gradient(circle at 40% 60%, #58c4fa 60%, #191c20 100%);
-  border-radius: 44% 56% 65% 35% / 47% 70% 30% 53%;
-}
-body:not([data-flat-theme]):not([data-theme="light"]) .bg-shape2 {
-  width: 230px; height: 230px;
-  right: -90px; top: 55vh;
-  background: radial-gradient(circle at 60% 30%, #1be7ff 70%, #191c20 100%);
-  border-radius: 50% 40% 60% 45% / 45% 60% 40% 55%;
-}
-body:not([data-flat-theme]):not([data-theme="light"]) .bg-shape3 {
-  width: 120px; height: 120px;
-  left: 70vw; top: 85vh;
-  background: linear-gradient(135deg, #58c4fa 60%, #1be7ff 100%);
-  border-radius: 44% 56% 65% 35% / 47% 70% 30% 53%;
-}
-
-/* Light theme shapes */
-[data-theme="light"]:not([data-flat-theme]) .bg-shape1 {
-  width: 310px; height: 310px;
-  left: -100px; top: -90px;
-  background: radial-gradient(circle at 30% 60%, #b8e1ff 70%, #f7f9fa 100%);
-  border-radius: 50% 40% 62% 38% / 47% 70% 30% 53%;
-  opacity: 0.17;
-}
-[data-theme="light"]:not([data-flat-theme]) .bg-shape2 {
-  width: 170px; height: 170px;
-  right: -60px; top: 60vh;
-  background: radial-gradient(circle at 60% 30%, #a7e3fa 80%, #f7f9fa 100%);
-  border-radius: 50% 40% 60% 45% / 45% 60% 40% 55%;
-  opacity: 0.16;
-}
-[data-theme="light"]:not([data-flat-theme]) .bg-shape3 {
-  width: 90px; height: 90px;
-  left: 68vw; top: 82vh;
-  background: linear-gradient(135deg, #b8e1ff 60%, #a7e3fa 100%);
-  border-radius: 44% 56% 65% 35% / 47% 70% 30% 53%;
-  opacity: 0.15;
-}
-/* Ocean, Sunset, Forest, Mono theme shapes ... as previously supplied ... */
 
 /* Card Centering */
 .center-wrapper {
@@ -152,6 +103,8 @@ body:not([data-flat-theme]):not([data-theme="light"]) .bg-shape3 {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  z-index: 1;
+  position: relative;
 }
 
 /* Minimal main card */
@@ -174,6 +127,7 @@ main {
   padding: 24px 18px 18px 18px;
   overflow-y: auto;
   overflow-x: hidden;
+  z-index: 2;
 }
 
 .site-logo {
@@ -255,7 +209,6 @@ h2 {
   display: block;
 }
 
-/* Section spacing */
 section {
   margin-bottom: 0.7rem;
 }
@@ -400,9 +353,7 @@ a:hover {
 }
 
 @media (max-width: 600px) {
-  .bg-shapes {
-    display: none;
-  }
+  #matrix-bg { display: none; }
   .center-wrapper { min-height: unset; }
   main { 
     max-width: 99vw; 
