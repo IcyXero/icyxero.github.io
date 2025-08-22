@@ -97,6 +97,8 @@
       btn.textContent = theme === 'dark' ? '🌙' : '☀️';
       btn.setAttribute('data-tooltip', theme === 'dark' ? 'Light Mode' : 'Dark Mode');
       localStorage.setItem('theme', theme);
+      // Ensure card layout matches theme
+      updateThemeForCard();
     }
     function toggleTheme() {
       const current = document.documentElement.getAttribute('data-theme');
@@ -150,14 +152,23 @@
     function updateThemeForCard() {
       const main = document.querySelector('main');
       main.classList.remove(
-        'theme-default', 'theme-ocean', 'theme-sunset', 'theme-forest', 'theme-mono'
+        'theme-default', 'theme-ocean', 'theme-sunset', 'theme-forest', 'theme-mono', 'theme-dark', 'theme-light'
       );
-      let flat = document.body.getAttribute('data-flat-theme') || 'default';
-      main.classList.add('theme-' + flat);
+      let flat = document.body.getAttribute('data-flat-theme');
+      let dt = document.documentElement.getAttribute('data-theme');
+      if (flat && flat !== "default") {
+        main.classList.add('theme-' + flat);
+      } else if (dt) {
+        main.classList.add('theme-' + dt);
+      } else {
+        main.classList.add('theme-default');
+      }
     }
     // On theme change, update card
     new MutationObserver(updateThemeForCard)
       .observe(document.body, { attributes: true, attributeFilter: ['data-flat-theme'] });
+    new MutationObserver(updateThemeForCard)
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     updateThemeForCard();
 
     // Matrix background effect
@@ -174,7 +185,7 @@
       const matrixThemes = {
         'default':   { color: '#58c4fa', shadow: '#1be7ff', chars: 'アイシゼロ0123456789' },
         'dark':      { color: '#58c4fa', shadow: '#1be7ff', chars: 'アイシゼロ0123456789' },
-        'light':     { color: '#1877f2', shadow: '#72bfff', chars: 'IcyXero0123456789' },
+        'light':     { color: '#1877f2', shadow: '#114488', chars: 'IcyXero0123456789' },
         'ocean':     { color: '#00b4d8', shadow: '#48cae4', chars: '水海潮0123456789' },
         'sunset':    { color: '#f67280', shadow: '#f8b195', chars: '夕日サンセット0123456789' },
         'forest':    { color: '#53d769', shadow: '#a7c957', chars: '森林フォレスト0123456789' },
