@@ -1,0 +1,16 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# VSCode settings
+.vscode/
+
+# Node modules (if you ever use npm/yarn)
+node_modules/
+
+# Build output (if you use a build process)
+dist/
+build/
+
+# Logs
+*.log
