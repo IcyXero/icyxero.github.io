@@ -8,25 +8,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>IcyXero | Web Developer Portfolio</title>
   <meta name="description" content="Minimal portfolio for IcyXero — web developer from Brooklyn, NY. Copying or stealing this portfolio template without permission is strictly forbidden.">
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
-  <!-- Google Fonts: 'Rajdhani' -->
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- Prevent browser from using cached CSS -->
   <link rel="stylesheet" href="style.css?v=20250822">
 </head>
 <body>
-  <!-- Cool Themed Background Shapes -->
-  <div class="bg-shapes">
-    <div class="bg-shape bg-shape1"></div>
-    <div class="bg-shape bg-shape2"></div>
-    <div class="bg-shape bg-shape3"></div>
-  </div>
+  <!-- Matrix Canvas Background -->
+  <canvas id="matrix-bg"></canvas>
   <div class="center-wrapper">
     <main>
       <section class="intro">
-        <!-- If you have a logo, add it here -->
-        <img src="logo.png" alt="IcyXero Avatar" class="site-logo">
+        <img src="logo.png" alt="IcyXero Logo" class="site-logo">
         <h1>IcyXero</h1>
         <p class="bio">
           Web developer from Brooklyn, NY.<br>
@@ -89,7 +81,7 @@
     </select>
   </div>
   <script>
-    // Theme toggling and picker... (unchanged)
+    // Theme toggling and picker
     const btn = document.getElementById('theme-toggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const userTheme = localStorage.getItem('theme');
@@ -127,6 +119,76 @@
     themeSelect.addEventListener('change', function() {
       setFlatTheme(themeSelect.value);
     });
+
+    // Matrix background effect
+    (() => {
+      const canvas = document.getElementById('matrix-bg');
+      const ctx = canvas.getContext('2d');
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let fontSize = 18;
+      let columns = Math.floor(width / fontSize);
+      let drops = new Array(columns).fill(1);
+
+      // Character sets per theme
+      const matrixThemes = {
+        'default':   { color: '#58c4fa', shadow: '#1be7ff', chars: 'アイシゼロ0123456789' },
+        'dark':      { color: '#58c4fa', shadow: '#1be7ff', chars: 'アイシゼロ0123456789' },
+        'light':     { color: '#1877f2', shadow: '#72bfff', chars: 'IcyXero0123456789' },
+        'ocean':     { color: '#00b4d8', shadow: '#48cae4', chars: '水海潮0123456789' },
+        'sunset':    { color: '#f67280', shadow: '#f8b195', chars: '夕日サンセット0123456789' },
+        'forest':    { color: '#53d769', shadow: '#a7c957', chars: '森林フォレスト0123456789' },
+        'mono':      { color: '#bbb', shadow: '#888', chars: '01IcyXero' }
+      };
+
+      function getMatrixTheme() {
+        const body = document.body;
+        const flat = body.getAttribute('data-flat-theme');
+        if (flat && matrixThemes[flat]) return matrixThemes[flat];
+        const dt = document.documentElement.getAttribute('data-theme');
+        if (dt && matrixThemes[dt]) return matrixThemes[dt];
+        return matrixThemes['default'];
+      }
+
+      function resizeMatrix() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        fontSize = Math.max(13, Math.floor(width / 90));
+        columns = Math.floor(width / fontSize);
+        drops = new Array(columns).fill(1 + Math.floor(Math.random() * 5));
+      }
+
+      function drawMatrix() {
+        // Fade the background slowly instead of clearing all at once
+        ctx.fillStyle = 'rgba(25,28,32,0.16)';
+        ctx.fillRect(0, 0, width, height);
+
+        const theme = getMatrixTheme();
+        ctx.font = fontSize + "px 'Rajdhani', monospace";
+        ctx.shadowColor = theme.shadow;
+        ctx.shadowBlur = 9;
+        for (let i = 0; i < columns; i++) {
+          const text = theme.chars[Math.floor(Math.random() * theme.chars.length)];
+          ctx.fillStyle = theme.color;
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+          if (Math.random() > 0.962) drops[i] = 0;
+          drops[i]++;
+          if (drops[i] * fontSize > height && Math.random() > 0.97) drops[i] = 0;
+        }
+      }
+
+      window.addEventListener('resize', resizeMatrix);
+      // Re-render on theme changes
+      const observer = new MutationObserver(resizeMatrix);
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      observer.observe(document.body, { attributes: true, attributeFilter: ['data-flat-theme'] });
+
+      resizeMatrix();
+      setInterval(drawMatrix, 61);
+    })();
+
     // Live reload (dev only)
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
       if ('WebSocket' in window) {
